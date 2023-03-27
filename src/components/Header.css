@@ -84,6 +84,11 @@ a {
     background-color: #ffffff14;
   }
 
+  .nav-link li.active {
+    color: #fff;
+    background-color: #ffffff14;
+  }
+
   .navigate {
     height: 13rem;
   }
