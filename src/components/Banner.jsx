@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import banner from "../assets/images/banner.jpg";
 import "./Banner.css";
 
@@ -11,7 +12,9 @@ export default function Banner() {
         </p>
         <h1>New Collection For Fall</h1>
         <p>Discover all the new arrivals of ready-to-wear collection.</p>
-        <button>shop now</button>
+        <Link to="/order">
+          <button>shop now</button>
+        </Link>
       </div>
 
       <div className="right">

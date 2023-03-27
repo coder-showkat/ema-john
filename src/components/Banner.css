@@ -26,11 +26,24 @@
   background-color: #ff9900;
   text-transform: uppercase;
   border: none;
+  font-size: 1.3rem;
   outline: none;
   margin-top: 3.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s ease;
+  animation: scale 0.8s ease-in-out infinite;
+}
+
+@keyframes scale {
+  0%,
+  100% {
+    transform: scale(100%);
+  }
+
+  50% {
+    transform: scale(90%);
+  }
 }
 
 .left button:hover {
