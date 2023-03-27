@@ -64,7 +64,7 @@ a {
     align-items: start;
     z-index: 500;
     background-color: #1c2b35;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     height: 0;
     transition: height 0.3s ease-in-out;
     overflow: hidden;
@@ -90,6 +90,6 @@ a {
   }
 
   .navigate {
-    height: 13rem;
+    height: 13.5rem;
   }
 }

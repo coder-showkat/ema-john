@@ -27,7 +27,7 @@ export default function Header() {
           className={`nav-link ${isNavigate ? "navigate" : ""}`}
           onClick={() => setNavigate(false)}
         >
-          <Link to="/">
+          <Link to="/" style={{ marginTop: ".6rem" }}>
             <li className={pathname === "/" ? "active" : ""}>Home</li>
           </Link>
           <Link to="/order">
