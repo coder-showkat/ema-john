@@ -113,6 +113,23 @@ export default function OrderReview() {
       )}
 
       <div className="cart-menu" onClick={() => setNavigate(!isNavigate)}>
+        <span
+          style={{
+            position: "absolute",
+            zIndex: 800,
+            color: "#fff",
+            width: "1rem",
+            height: "1rem",
+            fontSize: ".8rem",
+            top: "-6px",
+            right: "-6px",
+            borderRadius: "50%",
+            background: "#ff7700",
+            textAlign: "center",
+          }}
+        >
+          {selected_items}
+        </span>
         <ion-icon name="cart-outline"></ion-icon>
       </div>
 
