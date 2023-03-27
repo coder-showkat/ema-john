@@ -1,0 +1,58 @@
+.banner {
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  justify-items: center;
+  align-items: center;
+  gap: 3rem;
+  color: #0e161a;
+}
+
+.left small {
+  color: #ff9900;
+  font-size: 0.8rem;
+}
+
+.left h1 {
+  font-size: 3rem;
+  margin-top: 3.4rem;
+}
+
+.left button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background-color: #ff9900;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  margin-top: 3.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.left button:hover {
+  background-color: #e18803;
+}
+
+.right img {
+  max-height: 450px;
+}
+
+@media screen and (max-width: 680px) {
+  .banner {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .left h1 {
+    font-size: 2.5rem;
+  }
+}

@@ -1,0 +1,21 @@
+.login {
+  height: 80vh;
+  min-height: 320px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.login p {
+  color: #2a414f;
+  font-size: 3.5rem;
+  font-weight: 300;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 540px) {
+  .login p {
+    font-size: 2.5rem;
+  }
+}
