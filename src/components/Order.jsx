@@ -1,6 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ApiData } from "../App";
 import {
   addToDb,
   deleteShoppingCart,
@@ -11,39 +11,33 @@ import "./Order.css";
 import Product from "./Product";
 
 export default function Order() {
-  const [data, setData] = useState([]);
-  const [addedItems, setAddedItems] = useState({});
+  const data = useContext(ApiData);
+  const [localStorageData, setLocalStorageData] = useState({});
   const [addedCarts, setAddedCarts] = useState([]);
   const [isNavigate, setNavigate] = useState(false);
 
   const addToCartHandler = (id) => {
     addToDb(id);
-    setAddedItems(getShoppingCart());
+    setLocalStorageData(getShoppingCart());
   };
 
   useEffect(() => {
-    axios
-      .get(
-        "https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json"
-      )
-      .then((data) => setData(data?.data));
-
     const ema_john = getShoppingCart();
-    if (ema_john) setAddedItems(ema_john);
+    if (ema_john) setLocalStorageData(ema_john);
   }, []);
 
   useEffect(() => {
     const localStorageCarts = [];
-    Object.keys(addedItems).length > 0 &&
+    Object.keys(localStorageData).length > 0 &&
       data.length > 0 &&
-      Object.keys(addedItems).forEach((id) => {
+      Object.keys(localStorageData).forEach((id) => {
         const Item = data.find((item) => item["id"] === id);
-        Item.quantity = addedItems[id];
+        Item.quantity = localStorageData[id];
         localStorageCarts.push(Item);
       });
 
     setAddedCarts(localStorageCarts);
-  }, [data, addedItems]);
+  }, [data, localStorageData]);
 
   const selected_items = addedCarts
     .map((item) => item.quantity)

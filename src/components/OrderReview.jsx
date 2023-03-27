@@ -1,6 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ApiData } from "../App";
 import {
   addToDb,
   deleteShoppingCart,
@@ -12,56 +12,50 @@ import AddedCart from "./AddedCart";
 import "./OrderReview.css";
 
 export default function OrderReview() {
-  const [data, setData] = useState([]);
-  const [addedItems, setAddedItems] = useState({});
+  const data = useContext(ApiData);
+  const [localStorageData, setLocalStorageData] = useState({});
   const [addedCarts, setAddedCarts] = useState([]);
   const [isNavigate, setNavigate] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json"
-      )
-      .then((data) => setData(data?.data));
-
     const ema_john = getShoppingCart();
-    if (ema_john) setAddedItems(ema_john);
+    if (ema_john) setLocalStorageData(ema_john);
   }, []);
 
   useEffect(() => {
     const localStorageCarts = [];
-    Object.keys(addedItems).length > 0 &&
+    Object.keys(localStorageData).length > 0 &&
       data.length > 0 &&
-      Object.keys(addedItems).forEach((id) => {
+      Object.keys(localStorageData).forEach((id) => {
         const Item = data.find((item) => item["id"] === id);
-        Item.quantity = addedItems[id];
+        Item.quantity = localStorageData[id];
         localStorageCarts.push(Item);
       });
 
     setAddedCarts(localStorageCarts);
-  }, [data, addedItems]);
+  }, [data, localStorageData]);
 
   const removeCart = (id) => {
     removeFromDb(id);
     const newItems = getShoppingCart();
-    if (newItems) setAddedItems(newItems);
-    else setAddedItems({});
+    if (newItems) setLocalStorageData(newItems);
+    else setLocalStorageData({});
   };
 
   const changeQty = (action, id) => {
     switch (action) {
       case "plus": {
-        const Items = { ...addedItems };
+        const Items = { ...localStorageData };
         Items[id] = Items[id] + 1;
         addToDb(id);
-        setAddedItems(Items);
+        setLocalStorageData(Items);
         break;
       }
       case "minus": {
-        const Items = { ...addedItems };
+        const Items = { ...localStorageData };
         if (Items[id] > 1) Items[id] = Items[id] - 1;
         localStorage.setItem("shopping-cart", JSON.stringify(Items));
-        setAddedItems(Items);
+        setLocalStorageData(Items);
         break;
       }
     }
