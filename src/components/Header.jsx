@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/images/Logo.svg";
 import "./Header.css";
 
 export default function Header() {
+  const location = useLocation();
+  const [pathname, setPathname] = useState("");
   const [isNavigate, setNavigate] = useState(false);
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location]);
 
   return (
     <header className="header">
@@ -22,19 +28,23 @@ export default function Header() {
           onClick={() => setNavigate(false)}
         >
           <Link to="/">
-            <li>Home</li>
+            <li className={pathname === "/" ? "active" : ""}>Home</li>
           </Link>
           <Link to="/order">
-            <li>Order</li>
+            <li className={pathname === "/order" ? "active" : ""}>Order</li>
           </Link>
           <Link to="/order-review">
-            <li>Order Review</li>
+            <li className={pathname === "/order-review" ? "active" : ""}>
+              Order Review
+            </li>
           </Link>
           <Link to="/manage-inventory">
-            <li>Manage Inventory</li>
+            <li className={pathname === "/manage-inventory" ? "active" : ""}>
+              Manage Inventory
+            </li>
           </Link>
           <Link to="/login">
-            <li>Login</li>
+            <li className={pathname === "/login" ? "active" : ""}>Login</li>
           </Link>
         </ul>
       </nav>
