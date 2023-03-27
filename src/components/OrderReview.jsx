@@ -17,7 +17,11 @@ export default function OrderReview() {
   const [isNavigate, setNavigate] = useState(false);
 
   useEffect(() => {
-    axios.get("data.json").then((data) => setData(data?.data));
+    axios
+      .get(
+        "https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json"
+      )
+      .then((data) => setData(data?.data));
 
     const ema_john = getShoppingCart();
     if (ema_john) setAddedItems(ema_john);
