@@ -1,3 +1,4 @@
+import { ToastWarning } from "../assets/utilities/Toastify";
 import "./AddedCart.css";
 
 export default function AddedCart({ item, removeCart, changeQty }) {
@@ -27,7 +28,13 @@ export default function AddedCart({ item, removeCart, changeQty }) {
             +
           </button>
         </div>
-        <button className="btn-remove" onClick={() => removeCart(id)}>
+        <button
+          className="btn-remove"
+          onClick={() => {
+            removeCart(id);
+            ToastWarning(name + " is removed from cart!");
+          }}
+        >
           <ion-icon name="trash-outline"></ion-icon>
         </button>
       </div>

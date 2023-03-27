@@ -7,6 +7,7 @@ import {
   getShoppingCart,
   removeFromDb,
 } from "../assets/utilities/fakedb";
+import { ToastWarning } from "../assets/utilities/Toastify";
 import AddedCart from "./AddedCart";
 import "./OrderReview.css";
 
@@ -131,6 +132,7 @@ export default function OrderReview() {
             onClick={() => {
               deleteShoppingCart();
               setAddedCarts([]);
+              ToastWarning("All item is removed from cart!");
             }}
           >
             Clear Cart <ion-icon name="trash-outline"></ion-icon>

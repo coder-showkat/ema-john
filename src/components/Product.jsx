@@ -1,4 +1,5 @@
 import React from "react";
+import { ToastSuccess } from "../assets/utilities/Toastify";
 import "./Product.css";
 
 export default function Product({ item, addToCartHandler }) {
@@ -14,7 +15,12 @@ export default function Product({ item, addToCartHandler }) {
       <div className="card-body">
         <p>Manufacturer: {seller}</p>
         <p>Rating: {ratings} star</p>
-        <button onClick={() => addToCartHandler(id)}>
+        <button
+          onClick={() => {
+            addToCartHandler(id);
+            ToastSuccess(name + " is added to cart!");
+          }}
+        >
           Add to Cart <ion-icon name="cart-outline"></ion-icon>
         </button>
       </div>

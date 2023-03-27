@@ -1,5 +1,7 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Banner from "./components/Banner";
 import Header from "./components/Header";
 import Inventory from "./components/Inventory";
@@ -11,6 +13,7 @@ const Layout = () => {
   return (
     <>
       <Header />
+      <ToastContainer />
       <main>
         <Outlet />
       </main>
