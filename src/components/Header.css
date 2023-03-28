@@ -79,6 +79,10 @@ a {
     width: 100%;
   }
 
+  .home-link {
+    margin-top: 0.6rem;
+  }
+
   .nav-link li:hover {
     color: #fff;
     background-color: #ffffff14;

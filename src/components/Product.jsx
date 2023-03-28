@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ToastSuccess } from "../assets/utilities/Toastify";
 import "./Product.css";
 
 export default function Product({ item, addToCartHandler }) {
   const { id, img, name, price, seller, ratings } = item;
+  const [shouldLoadImage, setShouldLoadImage] = useState(false);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadImage(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
+    }
+
+    return () => {
+      if (imageRef.current) {
+        observer.unobserve(imageRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="product">
       <div className="card-header">
-        <img src={img} alt={name} />
+        <img
+          ref={imageRef}
+          src={shouldLoadImage ? img : "https://via.placeholder.com/150"}
+          alt={name}
+        />
         <h2>{name}</h2>
         <h4>Price: ${price}</h4>
       </div>
