@@ -16,7 +16,7 @@ export default function Product({ item, addToCartHandler }) {
           observer.disconnect();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
     if (divRef.current) {
       observer.observe(divRef.current);
