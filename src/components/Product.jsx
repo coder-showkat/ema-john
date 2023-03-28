@@ -5,14 +5,14 @@ import "./Product.css";
 
 export default function Product({ item, addToCartHandler }) {
   const { id, img, name, price, seller, ratings } = item;
-  const [shouldLoadImage, setShouldLoadImage] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
   const divRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShouldLoadImage(true);
+          setShouldLoad(true);
           observer.disconnect();
         }
       },
@@ -31,7 +31,7 @@ export default function Product({ item, addToCartHandler }) {
 
   return (
     <div ref={divRef} className="product">
-      {shouldLoadImage ? (
+      {shouldLoad ? (
         <>
           <div className="card-header">
             <img src={img} alt={name} />
