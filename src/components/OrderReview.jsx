@@ -1,61 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ApiData } from "../App";
-import {
-  addToDb,
-  deleteShoppingCart,
-  getShoppingCart,
-  removeFromDb,
-} from "../assets/utilities/fakedb";
+import React, { useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
 import { ToastWarning } from "../assets/utilities/Toastify";
+import { deleteShoppingCart, removeFromDb } from "../assets/utilities/fakedb";
 import AddedCart from "./AddedCart";
 import "./OrderReview.css";
+import OrderSummary from "./OrderSummary";
 
 export default function OrderReview() {
-  const data = useContext(ApiData);
-  const [localStorageData, setLocalStorageData] = useState({});
-  const [addedCarts, setAddedCarts] = useState([]);
+  const { addedProducts } = useLoaderData();
+  const [addedCarts, setAddedCarts] = useState(addedProducts);
   const [isNavigate, setNavigate] = useState(false);
-
-  useEffect(() => {
-    const ema_john = getShoppingCart();
-    if (ema_john) setLocalStorageData(ema_john);
-  }, []);
-
-  useEffect(() => {
-    const localStorageCarts = [];
-    Object.keys(localStorageData).length > 0 &&
-      data.length > 0 &&
-      Object.keys(localStorageData).forEach((id) => {
-        const Item = data.find((item) => item["id"] === id);
-        Item.quantity = localStorageData[id];
-        localStorageCarts.push(Item);
-      });
-
-    setAddedCarts(localStorageCarts);
-  }, [data, localStorageData]);
 
   const removeCart = (id) => {
     removeFromDb(id);
-    const newItems = getShoppingCart();
-    if (newItems) setLocalStorageData(newItems);
-    else setLocalStorageData({});
+    setAddedCarts(addedCarts.filter((i) => i.id !== id));
   };
 
   const changeQty = (action, id) => {
     switch (action) {
       case "plus": {
-        const Items = { ...localStorageData };
-        Items[id] = Items[id] + 1;
-        addToDb(id);
-        setLocalStorageData(Items);
+        const index = addedCarts.findIndex((i) => i.id === id);
+        const newAddedCarts = [...addedCarts];
+        newAddedCarts[index].quantity = newAddedCarts[index].quantity + 1;
+        setAddedCarts(newAddedCarts);
         break;
       }
       case "minus": {
-        const Items = { ...localStorageData };
-        if (Items[id] > 1) Items[id] = Items[id] - 1;
-        localStorage.setItem("shopping-cart", JSON.stringify(Items));
-        setLocalStorageData(Items);
+        const index = addedCarts.findIndex((i) => i.id === id);
+        const newAddedCarts = [...addedCarts];
+        if (newAddedCarts[index].quantity > 1) {
+          newAddedCarts[index].quantity = newAddedCarts[index].quantity - 1;
+          setAddedCarts(newAddedCarts);
+        }
         break;
       }
     }
@@ -64,20 +40,6 @@ export default function OrderReview() {
   const selected_items = addedCarts
     .map((item) => item.quantity)
     .reduce((a, b) => a + b, 0);
-
-  const total_price = addedCarts
-    .map((item) => item.price * item.quantity)
-    .reduce((a, b) => a + b, 0);
-
-  const total_shipping = addedCarts
-    .map((item) => item.shipping * item.quantity)
-    .reduce((a, b) => a + b, 0);
-
-  const total_tax = parseFloat((total_price / 10).toFixed(2));
-
-  const grandTotal = parseFloat(
-    (total_price + total_shipping + total_tax).toFixed(2)
-  );
 
   return (
     <div className="order-review">
@@ -129,13 +91,7 @@ export default function OrderReview() {
 
       <div className={`order-summary ${isNavigate ? "expand" : ""}`}>
         <h2>Order Summary</h2>
-        <div>
-          <p>Selected Items: {selected_items}</p>
-          <p>Total Price: ${total_price}</p>
-          <p>Total Shipping Charge: ${total_shipping}</p>
-          <p>Tax: ${total_tax}</p>
-          <h4>Grand Total: ${grandTotal}</h4>
-        </div>
+        <OrderSummary addedCarts={addedCarts} />
 
         <div className="button-container">
           <button

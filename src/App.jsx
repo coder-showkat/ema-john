@@ -1,36 +1,31 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import React from "react";
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useNavigation,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Banner from "./components/Banner";
 import Header from "./components/Header";
 import Inventory from "./components/Inventory";
+import LoadingSpinner from "./components/LoadingSpinner";
 import Login from "./components/Login";
 import Order from "./components/Order";
 import OrderReview from "./components/OrderReview";
-
-const ApiData = React.createContext();
+import loaderData from "./loaderData/loaderData";
 
 const Layout = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json"
-      )
-      .then((res) => setData(res?.data));
-  }, []);
-
+  const navigation = useNavigation();
   return (
-    <ApiData.Provider value={data}>
+    <>
       <Header />
       <ToastContainer />
       <main>
-        <Outlet />
+        {navigation.state === "loading" ? <LoadingSpinner /> : <Outlet />}
       </main>
-    </ApiData.Provider>
+    </>
   );
 };
 
@@ -46,10 +41,12 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <Order />,
+        loader: loaderData,
       },
       {
         path: "/order-review",
         element: <OrderReview />,
+        loader: loaderData,
       },
       {
         path: "/manage-inventory",
@@ -71,4 +68,4 @@ function App() {
   );
 }
 
-export { ApiData, App };
+export default App;

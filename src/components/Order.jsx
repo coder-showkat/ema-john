@@ -1,66 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ApiData } from "../App";
-import {
-  addToDb,
-  deleteShoppingCart,
-  getShoppingCart,
-} from "../assets/utilities/fakedb";
+import React, { useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
 import { ToastWarning } from "../assets/utilities/Toastify";
+import { addToDb, deleteShoppingCart } from "../assets/utilities/fakedb";
 import "./Order.css";
+import OrderSummary from "./OrderSummary";
 import Product from "./Product";
 
 export default function Order() {
-  const data = useContext(ApiData);
-  const [localStorageData, setLocalStorageData] = useState({});
-  const [addedCarts, setAddedCarts] = useState([]);
+  const { products, addedProducts } = useLoaderData();
+  const [addedCarts, setAddedCarts] = useState(addedProducts);
   const [isNavigate, setNavigate] = useState(false);
 
   const addToCartHandler = (id) => {
     addToDb(id);
-    setLocalStorageData(getShoppingCart());
+    let product = addedCarts.find((i) => i.id === id);
+    if (product) {
+      product.quantity = product.quantity + 1;
+      setAddedCarts([...addedCarts.filter((i) => i.id !== id), product]);
+    } else {
+      product = products.find((i) => i.id === id);
+      product.quantity = 1;
+      setAddedCarts([...addedCarts, product]);
+    }
   };
-
-  useEffect(() => {
-    const ema_john = getShoppingCart();
-    if (ema_john) setLocalStorageData(ema_john);
-  }, []);
-
-  useEffect(() => {
-    const localStorageCarts = [];
-    Object.keys(localStorageData).length > 0 &&
-      data.length > 0 &&
-      Object.keys(localStorageData).forEach((id) => {
-        const Item = data.find((item) => item["id"] === id);
-        Item.quantity = localStorageData[id];
-        localStorageCarts.push(Item);
-      });
-
-    setAddedCarts(localStorageCarts);
-  }, [data, localStorageData]);
 
   const selected_items = addedCarts
     .map((item) => item.quantity)
     .reduce((a, b) => a + b, 0);
 
-  const total_price = addedCarts
-    .map((item) => item.price * item.quantity)
-    .reduce((a, b) => a + b, 0);
-
-  const total_shipping = addedCarts
-    .map((item) => item.shipping * item.quantity)
-    .reduce((a, b) => a + b, 0);
-
-  const total_tax = parseFloat((total_price / 10).toFixed(2));
-
-  const grandTotal = parseFloat(
-    (total_price + total_shipping + total_tax).toFixed(2)
-  );
-
   return (
     <section className="order">
       <div className="products" onClick={() => setNavigate(false)}>
-        {data.map((item) => (
+        {products.map((item) => (
           <Product
             key={item.id}
             item={item}
@@ -90,14 +61,7 @@ export default function Order() {
       </div>
       <div className={`summary ${isNavigate ? "expand" : ""}`}>
         <h2>Order Summary</h2>
-        <div>
-          <p>Selected Items: {selected_items}</p>
-          <p>Total Price: ${total_price}</p>
-          <p>Total Shipping Charge: ${total_shipping}</p>
-          <p>Tax: ${total_tax}</p>
-          <h4>Grand Total: ${grandTotal}</h4>
-        </div>
-
+        <OrderSummary addedCarts={addedCarts} />
         <div className="button-container">
           <button
             className="clear-btn"
