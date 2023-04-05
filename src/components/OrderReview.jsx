@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { ToastWarning } from "../assets/utilities/Toastify";
-import { deleteShoppingCart, removeFromDb } from "../assets/utilities/fakedb";
+import {
+  addToDb,
+  deleteShoppingCart,
+  getShoppingCart,
+  removeFromDb,
+} from "../assets/utilities/fakedb";
 import AddedCart from "./AddedCart";
 import "./OrderReview.css";
 import OrderSummary from "./OrderSummary";
@@ -23,6 +28,7 @@ export default function OrderReview() {
         const newAddedCarts = [...addedCarts];
         newAddedCarts[index].quantity = newAddedCarts[index].quantity + 1;
         setAddedCarts(newAddedCarts);
+        addToDb(id);
         break;
       }
       case "minus": {
@@ -31,6 +37,13 @@ export default function OrderReview() {
         if (newAddedCarts[index].quantity > 1) {
           newAddedCarts[index].quantity = newAddedCarts[index].quantity - 1;
           setAddedCarts(newAddedCarts);
+
+          const newLocalStorageData = getShoppingCart();
+          newLocalStorageData[id] = newLocalStorageData[id] - 1;
+          localStorage.setItem(
+            "shopping-cart",
+            JSON.stringify(newLocalStorageData)
+          );
         }
         break;
       }
