@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { ToastWarning } from "../assets/utilities/Toastify";
 import {
   addToDb,
@@ -15,6 +15,8 @@ export default function OrderReview() {
   const { addedProducts } = useLoaderData();
   const [addedCarts, setAddedCarts] = useState(addedProducts);
   const [isNavigate, setNavigate] = useState(false);
+
+  const navigate = useNavigate();
 
   const removeCart = (id) => {
     removeFromDb(id);
@@ -48,6 +50,10 @@ export default function OrderReview() {
         break;
       }
     }
+  };
+
+  const handleCheckout = () => {
+    navigate("/checkout");
   };
 
   const selected_items = addedCarts
@@ -117,7 +123,7 @@ export default function OrderReview() {
           >
             Clear Cart <ion-icon name="trash-outline"></ion-icon>
           </button>
-          <button className="order-btn">
+          <button onClick={handleCheckout} className="order-btn">
             Proceed Checkout <ion-icon name="arrow-forward-outline"></ion-icon>
           </button>
         </div>

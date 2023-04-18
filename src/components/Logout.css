@@ -1,0 +1,12 @@
+.logout-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background-color: #ff9900;
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.3rem;
+  outline: none;
+  margin-top: 3.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}

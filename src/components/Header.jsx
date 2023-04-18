@@ -42,7 +42,7 @@ export default function Header() {
           </Link>
           <Link to="/manage-inventory">
             <li className={pathname === "/manage-inventory" ? "active" : ""}>
-              Manage Inventory
+              Inventory
             </li>
           </Link>
           <Link to="/login">
