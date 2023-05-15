@@ -4,7 +4,7 @@ import { ToastSuccess } from "../assets/utilities/Toastify";
 import "./Product.css";
 
 export default function Product({ item, addToCartHandler }) {
-  const { id, img, name, price, seller, ratings } = item;
+  const { _id, img, name, price, seller, ratings } = item;
   const [shouldLoadImage, setShouldLoadImage] = useState(false);
   const imageRef = useRef(null);
 
@@ -41,7 +41,7 @@ export default function Product({ item, addToCartHandler }) {
         <p>Rating: {ratings} star</p>
         <button
           onClick={() => {
-            addToCartHandler(id);
+            addToCartHandler(_id);
             ToastSuccess(name + " is added to cart!");
           }}
         >

@@ -11,8 +11,10 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   max-width: 1400px;
-  margin: 80px auto;
+  margin: 80px auto 0;
   padding: 1rem;
+  padding-bottom: 4.5rem;
+  position: relative;
 }
 
 .summary {
@@ -122,4 +124,33 @@
   .products {
     grid-template-columns: 1fr;
   }
+}
+
+.pagination {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 0.1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.pagination button {
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: 1.5px solid #ff9900;
+}
+
+.pagination button.active {
+  background-color: #ff9900;
+}
+
+.pagination .limit {
+  background-color: #ff9900;
+  margin-left: 1rem;
+  border-radius: 0.3rem;
 }

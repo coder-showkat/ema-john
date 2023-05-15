@@ -39,7 +39,7 @@ a {
   text-decoration: none;
 }
 
-.active {
+.nav-link .active {
   color: #c5b5ff !important;
 }
 

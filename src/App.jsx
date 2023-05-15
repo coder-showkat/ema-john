@@ -9,8 +9,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Banner from "./components/Banner";
 import Checkout from "./components/Checkout";
+import ErrorPage from "./components/ErrorPage";
 import Header from "./components/Header";
-import Inventory from "./components/Inventory";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Login from "./components/Login";
 import Order from "./components/Order";
@@ -37,6 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -51,10 +52,6 @@ const router = createBrowserRouter([
         path: "/order-review",
         element: <OrderReview />,
         loader: loaderData,
-      },
-      {
-        path: "/manage-inventory",
-        element: <Inventory />,
       },
       {
         path: "/login",

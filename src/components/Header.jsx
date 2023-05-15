@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/images/Logo.svg";
+import { ToastSuccess, ToastWarning } from "../assets/utilities/Toastify";
+import { AuthContext } from "../probiders/AuthProvider";
 import "./Header.css";
 
 export default function Header() {
+  const { user, error, logOut } = useContext(AuthContext);
   const location = useLocation();
   const [pathname, setPathname] = useState("");
   const [isNavigate, setNavigate] = useState(false);
@@ -11,6 +14,12 @@ export default function Header() {
   useEffect(() => {
     setPathname(location.pathname);
   }, [location]);
+
+  const handleLogout = async () => {
+    await logOut();
+    if (error) ToastWarning(error.message);
+    else ToastSuccess("Log Out successful!");
+  };
 
   return (
     <header className="header">
@@ -45,9 +54,15 @@ export default function Header() {
               Inventory
             </li>
           </Link>
-          <Link to="/login">
-            <li className={pathname === "/login" ? "active" : ""}>Login</li>
-          </Link>
+          {user ? (
+            <a>
+              <li onClick={handleLogout}>Log Out</li>
+            </a>
+          ) : (
+            <Link to="/login">
+              <li className={pathname === "/login" ? "active" : ""}>Login</li>
+            </Link>
+          )}
         </ul>
       </nav>
     </header>

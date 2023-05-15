@@ -20,13 +20,13 @@ export default function OrderReview() {
 
   const removeCart = (id) => {
     removeFromDb(id);
-    setAddedCarts(addedCarts.filter((i) => i.id !== id));
+    setAddedCarts(addedCarts.filter((i) => i._id !== id));
   };
 
   const changeQty = (action, id) => {
     switch (action) {
       case "plus": {
-        const index = addedCarts.findIndex((i) => i.id === id);
+        const index = addedCarts.findIndex((i) => i._id === id);
         const newAddedCarts = [...addedCarts];
         newAddedCarts[index].quantity = newAddedCarts[index].quantity + 1;
         setAddedCarts(newAddedCarts);
@@ -34,7 +34,7 @@ export default function OrderReview() {
         break;
       }
       case "minus": {
-        const index = addedCarts.findIndex((i) => i.id === id);
+        const index = addedCarts.findIndex((i) => i._id === id);
         const newAddedCarts = [...addedCarts];
         if (newAddedCarts[index].quantity > 1) {
           newAddedCarts[index].quantity = newAddedCarts[index].quantity - 1;
@@ -66,7 +66,7 @@ export default function OrderReview() {
         <div className="added-products">
           {addedCarts.map((item) => (
             <AddedCart
-              key={item.id}
+              key={item._id}
               item={item}
               removeCart={removeCart}
               changeQty={changeQty}

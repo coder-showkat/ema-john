@@ -1,16 +1,20 @@
 import { getShoppingCart } from "../assets/utilities/fakedb";
 
 const loaderData = async () => {
-  const res = await fetch("products.json");
-  const products = await res.json();
   const localStorageData = getShoppingCart();
-  const addedProducts = [];
-  for (const key in localStorageData) {
-    const item = products.find(product=>product.id === key);
-    item.quantity = localStorageData[key];
-    addedProducts.push(item);
-  }
-  return {products, addedProducts};
+  const res = await fetch("https://ema-john-server-gn7b.onrender.com/api/products", {
+    method: "POST",
+    headers: {
+      "content-type": "Application/json"
+    },
+    body: JSON.stringify(Object.keys(localStorageData)),
+  });
+  const data = await res.json();
+  const addedProducts = data.map(item=> {
+    item.quantity = localStorageData[item._id];
+    return item;
+  })
+  return {addedProducts};
 };
 
 export default loaderData;

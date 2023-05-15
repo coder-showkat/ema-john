@@ -1,0 +1,41 @@
+.error-div {
+  height: 80vh;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-div p {
+  color: #2a414f;
+  font-size: 3.5rem;
+  font-weight: 300;
+  padding: 1rem;
+}
+
+.error-div button {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: #ff9900;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error-div button:active {
+  background-color: #cd7b00;
+  transform: scale(95%);
+}
+
+@media screen and (max-width: 540px) {
+  .error-div p {
+    font-size: 2.5rem;
+  }
+}
