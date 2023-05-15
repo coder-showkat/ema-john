@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { ToastWarning } from "../assets/utilities/Toastify";
 import { addToDb, deleteShoppingCart } from "../assets/utilities/fakedb";
+import LoadingSpinner from "./LoadingSpinner";
 import "./Order.css";
 import OrderSummary from "./OrderSummary";
 import Product from "./Product";
 
 export default function Order() {
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const { addedProducts } = useLoaderData();
   const [addedCarts, setAddedCarts] = useState(addedProducts);
@@ -25,12 +27,18 @@ export default function Order() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     fetch(
       `https://ema-john-server-gn7b.onrender.com/api/products?page=${selectedPage}&limit=${limit}`
     )
       .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error(err.message));
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   }, [selectedPage, limit]);
 
   const addToCartHandler = (id) => {
@@ -52,14 +60,21 @@ export default function Order() {
 
   return (
     <section className="order">
-      <div className="products" onClick={() => setNavigate(false)}>
-        {products.map((item) => (
-          <Product
-            key={item._id}
-            item={item}
-            addToCartHandler={addToCartHandler}
-          />
-        ))}
+      <div
+        className={`products ${loading ? "" : "grid"}`}
+        onClick={() => setNavigate(false)}
+      >
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          products.map((item) => (
+            <Product
+              key={item._id}
+              item={item}
+              addToCartHandler={addToCartHandler}
+            />
+          ))
+        )}
         <div className="pagination">
           {[...Array(totalPages).keys()].map((page) => (
             <button
