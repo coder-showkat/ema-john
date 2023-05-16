@@ -80,7 +80,10 @@ export default function Order() {
           {[...Array(totalPages).keys()].map((page) => (
             <button
               key={page}
-              onClick={() => setSelectedPage(page)}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                setSelectedPage(page);
+              }}
               className={selectedPage === page ? "active" : ""}
             >
               {page + 1}
@@ -90,6 +93,7 @@ export default function Order() {
             className="limit"
             value={limit}
             onChange={(e) => {
+              window.scrollTo(0, 0);
               setLimit(e.target.value);
               setSelectedPage(0);
             }}
