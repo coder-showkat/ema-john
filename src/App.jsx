@@ -1,4 +1,6 @@
-import React from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import React, { useEffect } from "react";
 import {
   Outlet,
   RouterProvider,
@@ -22,6 +24,10 @@ import AuthProvider from "./probiders/AuthProvider";
 
 const Layout = () => {
   const navigation = useNavigation();
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
   return (
     <>
       <Header />

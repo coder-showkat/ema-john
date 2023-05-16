@@ -30,7 +30,11 @@ export default function Product({ item, addToCartHandler }) {
   }, []);
 
   return (
-    <div className="product">
+    <div
+      className="product"
+      data-aos="fade-down-right"
+      data-aos-duration="1000"
+    >
       <div className="card-header">
         <img ref={imageRef} src={shouldLoadImage ? img : spinner} alt={name} />
         <h2>{name}</h2>

@@ -20,7 +20,7 @@ export default function Order() {
   const totalPages = Math.ceil(totalProducts / limit);
 
   useEffect(() => {
-    fetch("https://ema-john-server-gn7b.onrender.com/api/products-length")
+    fetch("https://ema-john-server-brown.vercel.app/api/products-length")
       .then((res) => res.json())
       .then((data) => setTotalProducts(data.total_products))
       .catch((err) => console.error(err.message));
@@ -29,7 +29,7 @@ export default function Order() {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://ema-john-server-gn7b.onrender.com/api/products?page=${selectedPage}&limit=${limit}`
+      `https://ema-john-server-brown.vercel.app/api/products?page=${selectedPage}&limit=${limit}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -37,6 +37,7 @@ export default function Order() {
         setLoading(false);
       })
       .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   }, [selectedPage, limit]);

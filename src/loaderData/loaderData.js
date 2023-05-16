@@ -2,7 +2,7 @@ import { getShoppingCart } from "../assets/utilities/fakedb";
 
 const loaderData = async () => {
   const localStorageData = getShoppingCart();
-  const res = await fetch("https://ema-john-server-gn7b.onrender.com/api/products", {
+  const res = await fetch("https://ema-john-server-brown.vercel.app/api/products", {
     method: "POST",
     headers: {
       "content-type": "Application/json"

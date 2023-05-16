@@ -4,7 +4,7 @@ import "./AddedCart.css";
 export default function AddedCart({ item, removeCart, changeQty }) {
   const { _id, img, name, price, shipping, quantity } = item;
   return (
-    <div className="added-cart">
+    <div className="added-cart" data-aos="fade-right" data-aos-duration="1000">
       <div className="details">
         <img src={img} alt="" />
         <div>

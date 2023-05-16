@@ -6,7 +6,12 @@ import "./Banner.css";
 export default function Banner() {
   return (
     <section className="banner">
-      <div className="left">
+      <div
+        className="left"
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        data-aos-delay="50"
+      >
         <p>
           <small>Sale up to 70% off</small>
         </p>
@@ -17,7 +22,12 @@ export default function Banner() {
         </Link>
       </div>
 
-      <div className="right">
+      <div
+        className="right"
+        data-aos="fade"
+        data-aos-duration="2000"
+        data-aos-delay="400"
+      >
         <img src={banner} alt="banner" />
       </div>
     </section>

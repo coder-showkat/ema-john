@@ -55,7 +55,7 @@ const Register = () => {
   if (user) return <Logout />;
 
   return (
-    <div className="login">
+    <div className="login" data-aos="zoom-in" data-aos-duration="1000">
       <form onSubmit={handleSignUp}>
         <h2 className="title">Sign-Up</h2>
         <div className="form-control">

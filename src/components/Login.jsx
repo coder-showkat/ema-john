@@ -42,7 +42,7 @@ export default function Login() {
   if (user) return <Logout />;
 
   return (
-    <div className="login">
+    <div className="login" data-aos="zoom-in" data-aos-duration="1000">
       {location.state && (
         <p
           className="error"
